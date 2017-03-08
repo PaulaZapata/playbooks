@@ -1,0 +1,13 @@
+---
+- name: Obtain Ix
+  hosts: centos
+  user: root
+  connection: local
+
+  tasks:
+    - name: Obtain Ix
+      shell: dmidecode --type 1
+      register: result
+    - debug: var=result.stdout
+    - local_action: copy content={{ result.stdout_lines }} dest=/root/copia.txt
+    - local_action: shell echo {{ result.stdout_lines }} >> /root/echo.txt
